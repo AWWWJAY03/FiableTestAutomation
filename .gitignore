@@ -1,0 +1,30 @@
+# Build and publish folders
+bin/
+obj/
+TestResults/
+*.user
+*.suo
+
+# VS Code settings
+.vs/
+
+# Rider settings
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Playwright downloads/cache
+.playwright/
+
+# Allure results and reports
+allure-results/
+allure-report/
+
+# SpecFlow/Reqnroll generated files
+*.feature.cs
+
+# Logs
+*.log
+

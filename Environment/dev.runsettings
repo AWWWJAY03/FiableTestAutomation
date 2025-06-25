@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <RunConfiguration>
+    </RunConfiguration>
+    <TestRunParameters>
+        <Parameter name="environment" value="dev" />
+        <Parameter name="browser" value="chrome" />
+        <Parameter name="headless" value="false" />
+        <Parameter name="baseUrl" value="https://abr.business.gov.au" />
+    </TestRunParameters>
+</RunSettings>
