@@ -6,12 +6,9 @@ namespace FiableTestAutomation.Pages
     public class SearchPage
     {
         private readonly IPage _page;
-        private ILocator inputSearchInput => _page.Locator("#SearchText");
-        private ILocator btnSearch => _page.Locator("#MainSearchButton");
-        private ILocator pageTitle => _page.Locator("#content-main");
-        private ILocator activeRows => _page.Locator("tr.active, td.active");
-        private ILocator noResults => _page.Locator("//h2[contains(., 'No matching names found')]");
-        private ILocator textRequired => _page.Locator("//h2[contains(., 'Search text required')]");
+        private ILocator InputSearchInput => _page.Locator("#SearchText");
+        private ILocator BtnSearch => _page.Locator("#MainSearchButton");
+        private ILocator PageTitle => _page.Locator("#content-main");
         public SearchPage(IPage page)
         {
             _page = page;
@@ -24,11 +21,11 @@ namespace FiableTestAutomation.Pages
 
         public async Task SearchABN(string input)
         {
-            await inputSearchInput.FillAsync(input);
-            await btnSearch.ClickAsync();
+            await InputSearchInput.FillAsync(input);
+            await BtnSearch.ClickAsync();
         }
 
-        public async Task<string?> GetPageTitle() =>  await pageTitle.GetAttributeAsync("title");
+        public async Task<string?> GetPageTitle() =>  await PageTitle.GetAttributeAsync("title");
 
         public async Task<bool> isMessageVisible(string message)
         {
