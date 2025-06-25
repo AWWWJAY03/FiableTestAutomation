@@ -21,25 +21,30 @@ namespace CSharpPlaywrightSpecFlow.Hooks
         [BeforeTestRun]
         public static async Task BeforeAll()
         {
+            // Clean allure-results directory (only once per run)
+            string outputPath = TestContext.CurrentContext.WorkDirectory;
+            string allureResults = Path.Combine(outputPath, "allure-results");
+            if (Directory.Exists(allureResults))
+            {
+                Directory.Delete(allureResults, true);
+            }
+            Directory.CreateDirectory(allureResults);
+
             _browser = await Driver.CreateBrowser();
         }
 
         [BeforeScenario]
         public async Task BeforeScenario()
         {
-            if (_browser != null)
-            {
-                _context = await _browser.NewContextAsync(new BrowserNewContextOptions
-                {
-                    ViewportSize = ViewportSize.NoViewport
-                });
+            if (_browser == null)
+                    throw new NullReferenceException("The browser is not initialized.");
 
-                Page = await _context.NewPageAsync();
-            }
-            else
+            _context = await _browser.NewContextAsync(new BrowserNewContextOptions
             {
-                throw new NullReferenceException("The browser is not initialized.");
-            }
+                ViewportSize = ViewportSize.NoViewport
+            });
+
+            Page = await _context.NewPageAsync();
         }
 
         [AfterScenario]
@@ -58,7 +63,7 @@ namespace CSharpPlaywrightSpecFlow.Hooks
             }
 
             if (_context != null) await _context.CloseAsync();
-            
+
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string reportIndex = Path.Combine(outputPath, "allure-report", "index.html");
             TestContext.WriteLine($"Allure report: file:///{reportIndex.Replace("\\", "/")}");

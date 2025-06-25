@@ -13,7 +13,7 @@ namespace FiableTestAutomation.StepDefinitions
         private SearchPage searchPage;
 
         [BeforeScenario]
-        public async Task BeforeScenario()
+        public void BeforeScenario()
         {
             page = Hooks.Page;
             searchPage = new SearchPage(page);
