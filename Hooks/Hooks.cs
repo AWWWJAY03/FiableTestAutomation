@@ -47,33 +47,18 @@ namespace CSharpPlaywrightSpecFlow.Hooks
         {
             if (context.TestError != null)
             {
-                byte[] screenshot = Array.Empty<byte>();
                 if (Page != null)
                 {
-                    screenshot = await Page.ScreenshotAsync();
+                    var screenshot = await Page.ScreenshotAsync();
+                    AllureApi.AddAttachment($"Failed Scenario: {context.ScenarioInfo.Title}", "image/png", screenshot);
+
+                    await Page.CloseAsync();
                 }
-                AllureApi.AddAttachment($"Failed Scenario: {context.ScenarioInfo.Title}",
-                    "application/png", screenshot);
+
             }
 
-            if (Page != null)
-            {
-                await Page.CloseAsync();
-            }
-            else
-            {
-                throw new NullReferenceException("The page is not initialized.");
-            }
-
-            if (_context != null)
-            {
-                await _context.CloseAsync();
-            }
-            else
-            {
-                throw new NullReferenceException("The context is not initialized.");
-            }
-
+            if (_context != null) await _context.CloseAsync();
+            
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string reportIndex = Path.Combine(outputPath, "allure-report", "index.html");
             TestContext.WriteLine($"Allure report: file:///{reportIndex.Replace("\\", "/")}");
@@ -83,19 +68,11 @@ namespace CSharpPlaywrightSpecFlow.Hooks
         [AfterTestRun]
         public static async Task AfterAll()
         {
-            if (_browser != null)
-            {
-                await _browser.CloseAsync();
-            }
-            else
-            {
-                throw new NullReferenceException("The browser is not initialized.");
-            }
+            if (_browser != null) await _browser.CloseAsync();
 
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string allureResults = Path.Combine(outputPath, "allure-results");
             string allureReport = Path.Combine(outputPath, "allure-report");
-            string reportIndex = Path.Combine(allureReport, "index.html");
             var process = Process.Start("allure.cmd", $"generate --single-file {allureResults} --clean -o {allureReport}");
             process.WaitForExit();
         }
