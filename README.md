@@ -79,19 +79,52 @@ Make sure the following are installed **before running the tests**:
 
 ---
 
-## Running Tests
+## Running Tests Using a `.runsettings` File with VS Code or Visual Studio Test Runner
 
-1. **Run all tests with your desired environment**
-    ```sh
-    dotnet test --settings Environment/QA.runsettings
+### Visual Studio
+
+1. **Open your solution in Visual Studio.**
+2. Go to `Test` > `Configure Run Settings` > `Select Solution Wide Run Settings File...`
+3. Browse and select `Environment > qa.runsettings` file from your project directory.
+4. Run your tests as usual (`Test` > `Run All Tests` or using the Test Explorer).
+
+> **Tip:** The selected `.runsettings` file will be used for all test runs until you change it.
+
+---
+
+### VS Code
+
+1. **Ensure you have the C# and Test Explorer extensions installed.**
+2. Place your `.runsettings` file in the project root or a known location.
+3. In your workspace settings (`.vscode/settings.json`), add or update:
+    ```json
+    {
+      "dotnet.unitTests.runSettingsPath": "Environment\\qa.runsettings"
+    }
     ```
-
-2. **After the run, Allure HTML report will be automatically generated**
-    ```sh
-    allure generate --single-file --clean -o allure-report
+4. Use the Test Explorer sidebar or run tests via the terminal:
     ```
+    dotnet test --settings Environment\\qa.runsettings
+    ```
+    Or simply:
+    ```
+    dotnet test
+    ```
+    if you set the workspace setting above.
 
-3. **Open the Allure report using the path provided**
+---
+
+**Note:**  
+- The `.runsettings` file allows you to configure environment variables, test timeouts, data collectors, and more.
+- Always verify the correct `.runsettings` file is selected before running your tests to ensure the intended configuration is applied.
+
+---
+
+## Reports
+
+1. **After the run, Allure HTML report will be automatically generated**
+
+2. **Open the Allure report using the path provided**
 
 ---
 
