@@ -22,14 +22,7 @@ namespace CSharpPlaywrightSpecFlow.Hooks
         public static async Task BeforeAll()
         {
             // Clean allure-results directory (only once per run)
-            string outputPath = TestContext.CurrentContext.WorkDirectory;
-            string allureResults = Path.Combine(outputPath, "allure-results");
-            if (Directory.Exists(allureResults))
-            {
-                Directory.Delete(allureResults, true);
-            }
-            Directory.CreateDirectory(allureResults);
-
+            AllureLifecycle.Instance.CleanupResultDirectory();
             _browser = await Driver.CreateBrowser();
         }
 
