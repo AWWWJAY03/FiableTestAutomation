@@ -18,39 +18,8 @@ Automated end-to-end testing for [https://abr.business.gov.au/](https://abr.busi
 Make sure the following are installed **before running the tests**:
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
-- [Node.js & npm](https://nodejs.org/)  
-  _Required to install the Allure CLI._
-- [Java JRE](https://adoptium.net/)  
-  _Required by Allure for report generation. Make sure `java` is available in your system PATH (see below)._
-- [Allure Commandline](https://docs.qameta.io/allure/#_installing_a_commandline)  
-  _Install via npm:_
-  ```sh
-  npm install -g allure-commandline
-  ```
 - Chrome/Edge/Firefox installed (for Playwright)
 - **Git** (for version control, optional but recommended)
-
----
-
-## Setting JAVA_HOME and PATH (Windows)
-
-1. **Set JAVA_HOME:**
-   - Open **System Properties** > **Environment Variables**.
-   - Under "System variables", click **New**.
-   - Variable name: `JAVA_HOME`
-   - Variable value: *(your Java path, e.g.,)*  
-     `C:\Program Files (x86)\Java\jre1.8.0_451`
-
-3. **Add Java to PATH:**
-   - In "System variables", select `Path` and click **Edit**.
-   - Click **New** and add:  
-     `%JAVA_HOME%\bin`
-   - Click OK to save.
-
-4. **Verify in a new terminal:**
-   ```sh
-   java -version
-   ```
 
 ---
 
@@ -65,16 +34,12 @@ Make sure the following are installed **before running the tests**:
 2. **Restore .NET dependencies**
     ```sh
     dotnet restore
+    .\install-tools.bat
     ```
 
 3. **Install Playwright browsers**
     ```sh
     dotnet playwright install
-    ```
-
-4. **Install Allure CLI globally**
-    ```sh
-    npm install -g allure-commandline
     ```
 
 ---
