@@ -70,6 +70,12 @@ if ! command -v allure &>/dev/null; then
   brew install allure
 fi
 
+# Check for Git
+if ! command -v git &>/dev/null; then
+  echo "Git not found. Installing Git..."
+  brew install git
+fi
+
 echo "Restoring NuGet packages..."
 dotnet restore
 
@@ -78,5 +84,3 @@ npx playwright install
 
 echo "Setup complete! You can now run your tests with:"
 echo "  dotnet test --settings Environment/qa.runsettings"
-echo "And view reports with:"
-echo "  allure serve bin/Debug/net8.0/allure-
