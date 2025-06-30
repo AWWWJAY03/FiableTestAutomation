@@ -60,14 +60,8 @@ Make sure the following are installed **before running the tests**:
     ```
 4. Use the Test Explorer sidebar or run tests via the terminal:
     ```
-    dotnet test --settings Environment\\qa.runsettings
+    dotnet test --settings Environment/qa.runsettings
     ```
-    Or simply:
-    ```
-    dotnet test
-    ```
-    if you set the workspace setting above.
-
 ---
 
 ### Visual Studio
