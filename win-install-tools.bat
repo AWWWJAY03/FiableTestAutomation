@@ -4,6 +4,38 @@ setlocal
 REM Get project bin directory (relative to script location)
 set "BIN_DIR=%~dp0bin"
 
+REM --- Check .NET SDK ---
+where dotnet >nul 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    echo .NET SDK not found. Downloading .NET 9 SDK installer...
+    powershell -Command "Start-Process 'https://download.visualstudio.microsoft.com/download/pr/3b7e8e2c-8b6e-4b3a-8e7a-3e6e2e8e2e8e/3b7e8e2c8b6e4b3a8e7a3e6e2e8e2e8e/dotnet-sdk-9.0.301-win-x64.exe' -Wait"
+    echo Please complete the .NET SDK installation, then re-run this script.
+    pause
+    exit /b
+) else (
+    echo .NET SDK is already installed.
+)
+
+REM --- Check Node ---
+where node >nul 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    echo Node.js not found. Downloading Node.js installer...
+    powershell -Command "Start-Process 'https://nodejs.org/dist/v20.14.0/node-v20.14.0-x64.msi' -Wait"
+    echo Please complete the Node.js installation, then re-run this script.
+    pause
+    exit /b
+)
+
+-- Check Git ---
+where git >nul 2>nul
+if %ERRORLEVEL% NEQ 0 (
+    echo Git not found. Downloading Git installer...
+    powershell -Command "Start-Process 'https://github.com/git-for-windows/git/releases/latest/download/Git-2.45.2-64-bit.exe' -Wait"
+    echo Please complete the Git installation, then re-run this script.
+    pause
+    exit /b
+)
+
 REM --- Check Java ---
 set "JAVA_DIR=%BIN_DIR%\java"
 set "JAVA_BIN=%JAVA_DIR%\jdk-21.0.7\bin"
@@ -46,3 +78,12 @@ echo To use them in this terminal session, PATH has been updated.
 echo For global use, add the following to your system/user PATH:
 echo   %JAVA_BIN%
 echo   %ALLURE_BIN%
+
+echo Restoring NuGet packages...
+dotnet restore
+
+echo Installing Playwright browsers...
+npx playwright install
+
+echo Setup complete! You can now run your tests with:
+echo   dotnet test --settings Environment\qa.runsettings

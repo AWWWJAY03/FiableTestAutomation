@@ -10,13 +10,13 @@ namespace FiableTestAutomation.StepDefinitions
     public class SearchSteps
     {
         public IPage? page { get; set; }
-        private SearchPage searchPage;
+        public required SearchPage searchPage;
 
         [BeforeScenario]
         public void BeforeScenario()
         {
-            page = Hooks.Page;
-            searchPage = new SearchPage(page);
+            page = Hooks.Page ?? throw new ArgumentNullException(nameof(Hooks.Page), "Playwright page is not initialized. Ensure that Playwright is set up correctly in the Hooks.");
+            searchPage = new SearchPage(page) ?? throw new ArgumentNullException(nameof(searchPage), "SearchPage cannot be null. Ensure that Playwright is initialized correctly.");
         }
 
         [StepDefinition(@"I launch ABN search website")]

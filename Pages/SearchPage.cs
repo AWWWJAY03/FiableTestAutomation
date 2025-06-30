@@ -11,12 +11,13 @@ namespace FiableTestAutomation.Pages
         private ILocator PageTitle => _page.Locator("#content-main");
         public SearchPage(IPage page)
         {
-            _page = page;
+            _page = page ?? throw new ArgumentNullException(nameof(page), "Page cannot be null. Ensure that Playwright is initialized correctly.");
         }
 
         public async Task NavigateToSearchABN()
         {
-            await _page.GotoAsync(TestContext.Parameters["baseUrl"]);
+            string baseUrl = TestContext.Parameters["baseUrl"] ?? throw new ArgumentNullException("baseUrl", "Base URL must be provided in the test context parameters.");
+            await _page.GotoAsync(baseUrl);
         }
 
         public async Task SearchABN(string input)

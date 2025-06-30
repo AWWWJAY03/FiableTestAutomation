@@ -17,10 +17,21 @@ Automated end-to-end testing for [https://abr.business.gov.au/](https://abr.busi
 
 Make sure the following are installed **before running the tests**:
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download)
+- [.NET 9 SDK](https://dotnet.microsoft.com/download) (This will be installed via install-tools)
+- JAVA (This will be installed via install-tools)
+- Allure (This will be installed via install-tools)
+- Playwright  (This will be installed via install-tools)
 - Chrome/Edge/Firefox installed (for Playwright)
-- **Git** [Git Download](https://git-scm.com/downloads)
+- **Git** [Git Download](https://git-scm.com/downloads) (This will be installed via install-tools)
 - **VS Code** [VS Code Download](https://code.visualstudio.com/)
+
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [Java (OpenJDK)](https://formulae.brew.sh/formula/openjdk) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [Playwright](https://playwright.dev/dotnet/docs/intro) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [Git](https://git-scm.com/downloads) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/edge), or [Firefox](https://www.mozilla.org/firefox/) installed (for Playwright)
+- [Visual Studio Code](https://code.visualstudio.com/) (Recommended editor)
 
 ---
 
@@ -48,7 +59,7 @@ Make sure the following are installed **before running the tests**:
 
 ### VS Code
 
-1. **Ensure you have the C# extensions installed.**
+1. **Ensure you have the C#, C# Dev Kit, Playwright Test for VSCode extensions are installed.**
 2. Place your `.runsettings` file in the project root or a known location.
 3. In your workspace settings (`.vscode/settings.json`), add or update:
     ```json
