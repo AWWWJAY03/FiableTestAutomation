@@ -16,11 +16,10 @@ Automated end-to-end testing for [https://abr.business.gov.au/](https://abr.busi
 ## Prerequisites
 
 Make sure the following are installed **before running the tests**:
-- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
-- [Java (OpenJDK)](https://formulae.brew.sh/formula/openjdk) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
-- [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
-- [Playwright](https://playwright.dev/dotnet/docs/intro) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
-- [Git](https://git-scm.com/downloads) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (Installed via [setup-mac.sh](./setup-mac.sh) or [setup-win.bat](./setup-win.bat))
+- [Java (OpenJDK)](https://formulae.brew.sh/formula/openjdk) (Installed via [setup-mac.sh](./setup-mac.sh) or [setup-win.bat](./setup-win.bat))
+- [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline) (Installed via [setup-mac.sh](./setup-mac.sh) or [setup-win.bat](./setup-win.bat))
+- [Git](https://git-scm.com/downloads) (Installed via [setup-mac.sh](./setup-mac.sh) or [setup-win.bat](./setup-win.bat))
 - [Chrome](https://www.google.com/chrome/), [Edge](https://www.microsoft.com/edge), or [Firefox](https://www.mozilla.org/firefox/) installed (for Playwright)
 - [Visual Studio Code](https://code.visualstudio.com/) (Recommended editor)
 
@@ -35,13 +34,13 @@ Make sure the following are installed **before running the tests**:
 
 2. **Macbook**
     ```sh
-    chmod +x mac-install-tools.sh
-    ./mac-install-tools.sh
+    chmod +x setup-mac.sh
+    ./setup-mac.sh
     ```
 
 3. **Windows**
     ```sh
-    ./win-install-tools.bat
+    ./setup-win.bat
     ```
 
 ---
@@ -125,7 +124,6 @@ FiableTestAutomation/
 
 ## Useful Links
 
-- [SpecFlow (BDD for .NET)](https://github.com/SpecFlowOSS/SpecFlow)
 - [Reqnroll (SpecFlow fork)](https://github.com/reqnroll/reqnroll)
 - [Allure Framework](https://github.com/allure-framework/allure2)
 - [Allure C# Integration](https://github.com/allure-framework/allure-csharp)

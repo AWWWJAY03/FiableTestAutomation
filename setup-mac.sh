@@ -45,12 +45,6 @@ if [ ! -f /usr/local/bin/dotnet ]; then
   fi
 fi
 
-# Node.js
-if ! command -v node &>/dev/null; then
-  echo "Node.js not found. Installing Node.js..."
-  brew install node
-fi
-
 # Java (OpenJDK)
 if ! command -v java &>/dev/null; then
   echo "Java not found. Installing OpenJDK..."
@@ -79,8 +73,9 @@ fi
 echo "Restoring NuGet packages..."
 dotnet restore
 
-echo "Installing Playwright browsers..."
-npx playwright install
+echo "Cleaning and building the project..."
+dotnet clean
+dotnet build
 
 echo "Setup complete! You can now run your tests with:"
 echo "  dotnet test --settings Environment/qa.runsettings"

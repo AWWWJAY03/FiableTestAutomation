@@ -4,6 +4,7 @@ using Microsoft.Playwright;
 using NUnit.Framework;
 using FiableTestAutomation.Utilities;
 using Reqnroll;
+using System.Runtime.InteropServices;
 
 namespace CSharpPlaywrightSpecFlow.Hooks
 {
@@ -71,7 +72,8 @@ namespace CSharpPlaywrightSpecFlow.Hooks
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string allureResults = Path.Combine(outputPath, "allure-results");
             string allureReport = Path.Combine(outputPath, "allure-report");
-            var process = Process.Start("allure", $"generate --single-file {allureResults} --clean -o {allureReport}");
+            string allureCmd = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "allure.cmd" : "allure";
+            var process = Process.Start(allureCmd, $"generate --single-file {allureResults} --clean -o {allureReport}");
             process.WaitForExit();
         }
     }
