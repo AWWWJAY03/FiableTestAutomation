@@ -16,15 +16,6 @@ Automated end-to-end testing for [https://abr.business.gov.au/](https://abr.busi
 ## Prerequisites
 
 Make sure the following are installed **before running the tests**:
-
-- [.NET 9 SDK](https://dotnet.microsoft.com/download) (This will be installed via install-tools)
-- JAVA (This will be installed via install-tools)
-- Allure (This will be installed via install-tools)
-- Playwright  (This will be installed via install-tools)
-- Chrome/Edge/Firefox installed (for Playwright)
-- **Git** [Git Download](https://git-scm.com/downloads) (This will be installed via install-tools)
-- **VS Code** [VS Code Download](https://code.visualstudio.com/)
-
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
 - [Java (OpenJDK)](https://formulae.brew.sh/formula/openjdk) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
 - [Allure CLI](https://docs.qameta.io/allure/#_installing_a_commandline) (Installed via [mac-install-tools.sh](./mac-install-tools.sh) or [win-install-tools.bat](./win-install-tools.bat))
