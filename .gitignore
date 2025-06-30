@@ -7,7 +7,6 @@ TestResults/
 
 # VS Code settings
 .vs/
-.vscode/
 
 # Rider settings
 .idea/

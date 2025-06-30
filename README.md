@@ -19,7 +19,8 @@ Make sure the following are installed **before running the tests**:
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download)
 - Chrome/Edge/Firefox installed (for Playwright)
-- **Git** (for version control, optional but recommended)
+- **Git** [Git Download](https://git-scm.com/downloads)
+- **VS Code** [VS Code Download](https://code.visualstudio.com/)
 
 ---
 
@@ -27,44 +28,32 @@ Make sure the following are installed **before running the tests**:
 
 1. **Clone the repository**
     ```sh
-    git clone https://github.com/your-org/FiableTestAutomation.git
-    cd FiableTestAutomation
+    git clone https://github.com/AWWWJAY03/FiableTestAutomation.git
     ```
 
-2. **Restore .NET dependencies**
+2. **Macbook**
     ```sh
-    dotnet restore
-    .\install-tools.bat
+    chmod +x mac-install-tools.sh
+    ./mac-install-tools.sh
     ```
 
-3. **Install Playwright browsers**
+3. **Windows**
     ```sh
-    dotnet playwright install
+    ./win-install-tools.bat
     ```
 
 ---
 
 ## Running Tests Using a `.runsettings` File with VS Code or Visual Studio Test Runner
 
-### Visual Studio
-
-1. **Open your solution in Visual Studio.**
-2. Go to `Test` > `Configure Run Settings` > `Select Solution Wide Run Settings File...`
-3. Browse and select `Environment > qa.runsettings` file from your project directory.
-4. Run your tests as usual (`Test` > `Run All Tests` or using the Test Explorer).
-
-> **Tip:** The selected `.runsettings` file will be used for all test runs until you change it.
-
----
-
 ### VS Code
 
-1. **Ensure you have the C# and Test Explorer extensions installed.**
+1. **Ensure you have the C# extensions installed.**
 2. Place your `.runsettings` file in the project root or a known location.
 3. In your workspace settings (`.vscode/settings.json`), add or update:
     ```json
     {
-      "dotnet.unitTests.runSettingsPath": "Environment\\qa.runsettings"
+      "dotnet.unitTests.runSettingsPath": "Environment/qa.runsettings"
     }
     ```
 4. Use the Test Explorer sidebar or run tests via the terminal:
@@ -76,6 +65,17 @@ Make sure the following are installed **before running the tests**:
     dotnet test
     ```
     if you set the workspace setting above.
+
+---
+
+### Visual Studio
+
+1. **Open your solution in Visual Studio.**
+2. Go to `Test` > `Configure Run Settings` > `Select Solution Wide Run Settings File...`
+3. Browse and select `Environment > qa.runsettings` file from your project directory.
+4. Run your tests as usual (`Test` > `Run All Tests` or using the Test Explorer).
+
+> **Tip:** The selected `.runsettings` file will be used for all test runs until you change it.
 
 ---
 
@@ -122,7 +122,7 @@ FiableTestAutomation/
 
 - **NullReferenceException**: Ensure `[BeforeScenario]` initializes all objects.
 - **BoDi.ObjectContainerException**: Check that all required NuGet packages are installed and versions are compatible.
-- **Could not find testhost**: Use a stable .NET SDK (e.g., net8.0).
+- **Could not find testhost**: Use a stable .NET SDK (e.g., net9.0).
 - **Allure not generating reports**: Ensure Java is installed and available in your PATH.
 
 ---

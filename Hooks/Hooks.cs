@@ -71,8 +71,7 @@ namespace CSharpPlaywrightSpecFlow.Hooks
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string allureResults = Path.Combine(outputPath, "allure-results");
             string allureReport = Path.Combine(outputPath, "allure-report");
-            string allureBat = Path.Combine(outputPath, @"..\..", "allure", "bin", "allure.bat");
-            var process = Process.Start(allureBat, $"generate --single-file {allureResults} --clean -o {allureReport}");
+            var process = Process.Start("allure", $"generate --single-file {allureResults} --clean -o {allureReport}");
             process.WaitForExit();
         }
     }
