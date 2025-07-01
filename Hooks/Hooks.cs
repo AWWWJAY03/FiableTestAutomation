@@ -2,73 +2,66 @@ using System.Diagnostics;
 using Allure.Net.Commons;
 using Microsoft.Playwright;
 using NUnit.Framework;
-using FiableTestAutomation.Utilities;
 using Reqnroll;
 using System.Runtime.InteropServices;
+using Reqnroll.BoDi;
+using FiableTestAutomation.Utilities;
 
-namespace CSharpPlaywrightSpecFlow.Hooks
+namespace FiableTestAutomation.Hooks
 {
-    /*
-    Hooks for test automation with C#, Playwright, and SpecFlow.
-    This code defines actions before and after test scenarios on the website "https://www.demoblaze.com".
-    */
     [Binding]
-    public sealed class Hooks
+    public class Hooks
     {
-        private static IBrowser? _browser;
-        private IBrowserContext? _context;
-        public static IPage? Page;
+        private readonly IObjectContainer _container;
+        private PlaywrightDriver? _driver;
 
-        [BeforeTestRun]
-        public static async Task BeforeAll()
+        public Hooks(IObjectContainer container)
         {
-            // Clean allure-results directory (only once per run)
+            _container = container;
+        }
+        [BeforeTestRun]
+        public static void BeforeAll()
+        {
+            // Clean up Allure results directory before each scenario (optional, usually done once per run)
             AllureLifecycle.Instance.CleanupResultDirectory();
-            _browser = await Driver.CreateBrowser();
         }
 
         [BeforeScenario]
         public async Task BeforeScenario()
         {
-            if (_browser == null)
-                    throw new NullReferenceException("The browser is not initialized.");
-
-            _context = await _browser.NewContextAsync(new BrowserNewContextOptions
-            {
-                ViewportSize = ViewportSize.NoViewport
-            });
-
-            Page = await _context.NewPageAsync();
+            _driver = new PlaywrightDriver();
+            await _driver.InitializeAsync();
+            _container.RegisterInstanceAs(_driver);
         }
 
         [AfterScenario]
         public async Task AfterScenario(ScenarioContext context)
         {
-            if (context.TestError != null)
+            // Get the driver instance from the container
+            var driver = _container.Resolve<PlaywrightDriver>();
+            var page = driver.Page;
+
+            // Attach screenshot to Allure if scenario failed
+            if (context.TestError != null && page != null)
             {
-                if (Page != null)
-                {
-                    var screenshot = await Page.ScreenshotAsync();
-                    AllureApi.AddAttachment($"Failed Scenario: {context.ScenarioInfo.Title}", "image/png", screenshot);
-
-                    await Page.CloseAsync();
-                }
-
+                var screenshot = await page.ScreenshotAsync();
+                AllureApi.AddAttachment($"Failed Scenario: {context.ScenarioInfo.Title}", "image/png", screenshot);
             }
 
-            if (_context != null) await _context.CloseAsync();
+            // Dispose Playwright resources
+            if (driver != null)
+                await driver.DisposeAsync();
 
+            // Print Allure report path
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string reportIndex = Path.Combine(outputPath, "allure-report", "index.html");
             TestContext.WriteLine($"Allure report: file:///{reportIndex.Replace("\\", "/")}");
-
         }
 
         [AfterTestRun]
-        public static async Task AfterAll()
+        public static void AfterAll()
         {
-            if (_browser != null) await _browser.CloseAsync();
-
+            // Generate Allure report after all tests
             string outputPath = TestContext.CurrentContext.WorkDirectory;
             string allureResults = Path.Combine(outputPath, "allure-results");
             string allureReport = Path.Combine(outputPath, "allure-report");

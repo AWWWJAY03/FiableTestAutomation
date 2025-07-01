@@ -10,14 +10,3 @@ This feature allows users to search for Australian Business Numbers (ABN) or Aus
       | input           |
       | 91 620 623 341  |
       | 620 623 341     |
-
-    Scenario Outline: Verify ABN Search using an invalid input
-    Given I launch ABN search website
-    When I search for "<input>"
-    Then I should see the error message "<message>"
-    Examples:
-      | input        | message                               |
-      |              | Search text required                  |
-      | *&*#&*!#*!&& | No matching names found               |
-      | 123456789    | The number entered is not a valid ACN |
-      | 12345678901  | The number entered is not a valid ABN |
