@@ -27,7 +27,7 @@ Make sure the following are installed **before running the tests**:
 
 ## Installation
 
-1. **Clone the repository**
+1. **Clone or [download](https://github.com/AWWWJAY03/FiableTestAutomation/archive/refs/heads/master.zip) the repository**
     ```sh
     git clone https://github.com/AWWWJAY03/FiableTestAutomation.git
     ```
@@ -39,6 +39,8 @@ Make sure the following are installed **before running the tests**:
     ```
 
 3. **Windows**
+    - Option 1: Run `setup-win.bat` as admin
+    - Option 2: Run via terminal (User intervention might be required during the installation)
     ```sh
     ./setup-win.bat
     ```

@@ -1,79 +1,62 @@
 @echo off
 SETLOCAL ENABLEDELAYEDEXPANSION
-
-:: Check and install Scoop
-where scoop >nul 2>nul
-if errorlevel 1 (
-    echo Installing Scoop...
-    powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb get.scoop.sh | iex"
-) else (
-    echo Scoop already installed.
-)
-
-:: Refresh environment
-set PATH=%PATH%;%USERPROFILE%\scoop\shims
-setx PATH "%PATH%;%USERPROFILE%\scoop\shims"
+cd /d "%~dp0"
 
 :: Install .NET SDK if not found
 where dotnet >nul 2>nul
 if errorlevel 1 (
     echo Installing .NET SDK...
-    scoop install dotnet-sdk
+    winget install -e --id Microsoft.DotNet.SDK.9 -e --silent --accept-package-agreements --accept-source-agreements
 ) else (
-    echo .NET SDK already installed.
+    echo .NET SDK is already installed.
 )
-
-@REM :: Install Node.js if not found
-@REM where node >nul 2>nul
-@REM if errorlevel 1 (
-@REM     echo Installing Node.js...
-@REM     scoop install nodejs-lts
-@REM ) else (
-@REM     echo Node.js already installed.
-@REM )
 
 :: Install Git if not found
 where git >nul 2>nul
 if errorlevel 1 (
     echo Installing Git...
-    scoop install git
+    winget install --id Git.Git -e --silent --accept-package-agreements --accept-source-agreements
 ) else (
-    echo Git already installed.
+    echo Git is already installed.
 )
 
-:: Install Java JDK if not found
+:: Download and extract OpenJDK 24 if not found
 where java >nul 2>nul
 if errorlevel 1 (
-    echo Installing OpenJDK 24...
-    scoop install openjdk
+    echo Installing JRE 24...
+    set "JDK_DEST=%USERPROFILE%\temp\java"
+    if not exist "!JDK_DEST!" mkdir "!JDK_DEST!"
+    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/adoptium/temurin24-binaries/releases/download/jdk-24.0.1%%2B9/OpenJDK24U-jre_x64_windows_hotspot_24.0.1_9.zip' -OutFile 'OpenJDK24.zip'"
+    powershell -Command "Expand-Archive -Path 'OpenJDK24.zip' -DestinationPath '!JDK_DEST!'"
+    del OpenJDK24.zip
+    for /d %%d in ("!JDK_DEST!\*") do (
+        setx JAVA_HOME "%%d"
+        setx PATH "%%d\bin;%PATH%"
+        echo JAVA_HOME set to: %%d
+        goto :done_java
+    )
+    echo Java is successfully installed.
 ) else (
     echo Java is already installed.
 )
-
-:: Set JAVA_HOME and add to PATH if not set
-for /f "delims=" %%j in ('where java') do (
-    set "JAVA_BIN=%%~dpj"
-    set "JAVA_HOME=%%~dpj.."
-    setx JAVA_HOME "!JAVA_HOME!" /M
-    setx PATH "!JAVA_HOME!\bin;%PATH%" /M
-    goto :done_java
-)
 :done_java
 
-:: Install Allure if not installed
+:: Download and extract Allure if not found
 where allure >nul 2>nul
 if errorlevel 1 (
-    echo Installing Allure...
-    scoop install allure
+    SET "ALLURE_DEST=%USERPROFILE%\temp\allure"
+    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.zip' -OutFile 'allure.zip'"
+    powershell -Command "Expand-Archive -Path 'allure.zip' -DestinationPath '!ALLURE_DEST!'"
+    del allure.zip
+    for /d %%d in ("!ALLURE_DEST!\allure-*") do (
+        setx ALLURE_HOME "%%d"
+        setx PATH "%%d\bin;%PATH%"
+        echo ALLURE_HOME set to: %%d
+        goto :done_allure
+    )
+    echo Allure is successfully installed.
 ) else (
     echo Allure is already installed.
-)
-
-:: Set ALLURE_HOME and add to PATH
-for /f "delims=" %%i in ('where allure') do (
-    set "ALLURE_BIN=%%~dpi"
-    setx PATH "%%~dpi;%PATH%" /M
-    goto :done_allure
 )
 :done_allure
 
@@ -84,5 +67,5 @@ echo "Cleaning and building the project..."
 dotnet clean
 dotnet build
 
-echo Setup complete! You can now run your tests with:
-echo   dotnet test --settings Environment\qa.runsettings
+echo Setup complete! Restart your terminal to apply changes.
+pause
