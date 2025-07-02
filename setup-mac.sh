@@ -77,5 +77,9 @@ echo "Cleaning and building the project..."
 dotnet clean
 dotnet build
 
+echo "Installing Playwright browsers..."
+dotnet tool restore
+dotnet playwright install
+
 echo "Setup complete! You can now run your tests with:"
 echo "  dotnet test --settings Environment/qa.runsettings"

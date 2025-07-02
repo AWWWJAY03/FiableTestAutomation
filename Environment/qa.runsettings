@@ -5,7 +5,7 @@
     </RunConfiguration>
     <TestRunParameters>
         <Parameter name="environment" value="qa" />
-        <Parameter name="browser" value="chrome" />
+        <Parameter name="browser" value="random" />
         <Parameter name="headless" value="false" />
         <Parameter name="baseUrl" value="https://abr.business.gov.au" />
     </TestRunParameters>

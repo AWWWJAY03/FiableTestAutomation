@@ -67,5 +67,9 @@ echo "Cleaning and building the project..."
 dotnet clean
 dotnet build
 
+echo "Installing Playwright browsers..."
+dotnet tool restore
+dotnet playwright install
+
 echo Setup complete! Restart your terminal to apply changes.
 pause

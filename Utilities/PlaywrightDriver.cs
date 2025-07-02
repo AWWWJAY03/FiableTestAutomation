@@ -13,13 +13,15 @@ namespace FiableTestAutomation.Utilities
         public async Task InitializeAsync()
         {
             WebDriver = await Playwright.CreateAsync();
-
-            switch (TestContext.Parameters["browser"])
+            string browserType = TestContext.Parameters["browser"]?.ToLower() ?? "chrome";
+            browserType = browserType == "random" ? new[] { "edge", "firefox", "chrome" }[new Random().Next(3)] : browserType;
+            switch (browserType)
             {
-                case "safari":
-                    Browser = await WebDriver.Webkit.LaunchAsync(new BrowserTypeLaunchOptions
+                case "edge":
+                    Browser = await WebDriver.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
                     {
                         Headless = Convert.ToBoolean(TestContext.Parameters["headless"]),
+                        Channel = "msedge"
                     });
                     break;
                 case "firefox":
