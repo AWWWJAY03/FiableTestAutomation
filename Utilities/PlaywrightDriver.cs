@@ -24,6 +24,12 @@ namespace FiableTestAutomation.Utilities
                         Channel = "msedge"
                     });
                     break;
+                case "safari":
+                    Browser = await WebDriver.Webkit.LaunchAsync(new BrowserTypeLaunchOptions
+                    {
+                        Headless = Convert.ToBoolean(TestContext.Parameters["headless"]),
+                    });
+                    break;
                 case "firefox":
                     Browser = await WebDriver.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
                     {

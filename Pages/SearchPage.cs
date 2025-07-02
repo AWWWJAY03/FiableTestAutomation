@@ -31,6 +31,7 @@ namespace FiableTestAutomation.Pages
         public async Task<bool> isMessageVisible(string message)
         {
             var locator = _page.Locator($"//h2[contains(., '{message}')]");
+            await _page.WaitForLoadStateAsync(LoadState.NetworkIdle);
             return await locator.IsVisibleAsync();
         }
     }
